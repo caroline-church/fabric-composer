@@ -19,7 +19,7 @@ import 'codemirror/addon/scroll/simplescrollbars';
     selector: 'editor-file',
     templateUrl: './editor-file.component.html',
     styleUrls: [
-        './editor-file.component.scss'.toString()
+        './editor-file.component.scss'
     ]
 })
 export class EditorFileComponent {

@@ -11,7 +11,7 @@ import { ActiveDrawer } from '../common/drawer';
 @Component({
     selector: 'update-business-network',
     templateUrl: './update.component.html',
-    styleUrls: ['./update.component.scss'.toString()],
+    styleUrls: ['./update.component.scss'],
 })
 export class UpdateComponent extends ImportComponent {
 

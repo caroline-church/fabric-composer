@@ -18,7 +18,7 @@ const uuid = require('uuid');
 @Component({
     selector: 'transaction-modal',
     templateUrl: './transaction.component.html',
-    styleUrls: ['./transaction.component.scss'.toString()]
+    styleUrls: ['./transaction.component.scss']
 })
 
 export class TransactionComponent implements OnInit {

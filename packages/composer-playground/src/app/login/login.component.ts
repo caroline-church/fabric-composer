@@ -21,9 +21,7 @@ import { AdminService } from '../services/admin.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: [
-        './login.component.scss'.toString()
-    ]
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 

@@ -17,7 +17,7 @@ import { AlertService } from '../basic-modals/alert.service';
     selector: 'connection-profile',
     templateUrl: './connection-profile.component.html',
     styleUrls: [
-        './connection-profile.component.scss'.toString()
+        './connection-profile.component.scss'
     ],
 
 })

@@ -6,7 +6,7 @@ import { IdCard } from 'composer-common';
     selector: 'identity-card',
     templateUrl: './identity-card.component.html',
     styleUrls: [
-        './identity-card.component.scss'.toString()
+        './identity-card.component.scss'
     ]
 })
 

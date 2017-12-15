@@ -11,7 +11,7 @@ import { ViewTransactionComponent } from '../view-transaction/view-transaction.c
     selector: 'registry',
     templateUrl: './registry.component.html',
     styleUrls: [
-        './registry.component.scss'.toString()
+        './registry.component.scss'
     ]
 })
 

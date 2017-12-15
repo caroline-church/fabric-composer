@@ -14,7 +14,7 @@ import 'codemirror/addon/scroll/simplescrollbars';
 @Component({
     selector: 'transaction-modal',
     templateUrl: './view-transaction.component.html',
-    styleUrls: ['./view-transaction.component.scss'.toString()]
+    styleUrls: ['./view-transaction.component.scss']
 })
 
 export class ViewTransactionComponent implements OnInit {

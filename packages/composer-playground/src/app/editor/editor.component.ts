@@ -30,7 +30,7 @@ import { saveAs } from 'file-saver';
     selector: 'app-editor',
     templateUrl: './editor.component.html',
     styleUrls: [
-        './editor.component.scss'.toString()
+        './editor.component.scss'
     ]
 })
 

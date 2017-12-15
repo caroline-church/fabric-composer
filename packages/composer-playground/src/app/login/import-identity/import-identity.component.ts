@@ -7,7 +7,7 @@ import { IdentityCardService } from '../../services/identity-card.service';
 @Component({
     selector: 'import-identity',
     templateUrl: './import-identity.component.html',
-    styleUrls: ['./import-identity.component.scss'.toString()]
+    styleUrls: ['./import-identity.component.scss']
 })
 export class ImportIdentityComponent {
 

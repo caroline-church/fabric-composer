@@ -7,7 +7,7 @@ import { Config } from './../services/config/configStructure.service';
 @Component({
     selector: 'welcome-modal',
     templateUrl: './welcome.component.html',
-    styleUrls: ['./welcome.component.scss'.toString()]
+    styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
 

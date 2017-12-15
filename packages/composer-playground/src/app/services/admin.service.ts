@@ -6,8 +6,8 @@ import { BusinessNetworkCardStoreService } from './cardStores/businessnetworkcar
 import { AdminConnection } from 'composer-admin';
 import { ConnectionProfileManager, Logger, BusinessNetworkDefinition, IdCard } from 'composer-common';
 
-import ProxyConnectionManager = require('composer-connector-proxy');
-import WebConnectionManager = require('composer-connector-web');
+import * as ProxyConnectionManager from 'composer-connector-proxy';
+import * as WebConnectionManager from 'composer-connector-web';
 
 @Injectable()
 export class AdminService {

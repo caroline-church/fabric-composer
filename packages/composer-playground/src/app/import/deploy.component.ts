@@ -11,7 +11,7 @@ import { IdentityCardService } from '../services/identity-card.service';
 @Component({
     selector: 'deploy-business-network',
     templateUrl: './deploy.component.html',
-    styleUrls: ['./deploy.component.scss'.toString()],
+    styleUrls: ['./deploy.component.scss'],
 })
 export class DeployComponent extends ImportComponent {
 

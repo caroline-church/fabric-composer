@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'error',
     templateUrl: './error.component.html',
-    styleUrls: ['./error.component.scss'.toString()]
+    styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent {
     @Input() error;

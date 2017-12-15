@@ -5,7 +5,7 @@ import { IdentityCardService } from '../../services/identity-card.service';
 @Component({
     selector: 'edit-card-credentials',
     templateUrl: './edit-card-credentials.component.html',
-    styleUrls: ['./edit-card-credentials.component.scss'.toString()]
+    styleUrls: ['./edit-card-credentials.component.scss']
 })
 
 export class EditCardCredentialsComponent {

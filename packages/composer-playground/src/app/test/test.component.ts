@@ -9,7 +9,7 @@ import { TransactionDeclaration } from 'composer-common';
     selector: 'app-test',
     templateUrl: './test.component.html',
     styleUrls: [
-        './test.component.scss'.toString()
+        './test.component.scss'
     ]
 })
 

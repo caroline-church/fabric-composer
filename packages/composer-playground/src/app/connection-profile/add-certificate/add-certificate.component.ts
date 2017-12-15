@@ -6,7 +6,7 @@ import { AlertService } from '../../basic-modals/alert.service';
 @Component({
     selector: 'add-certificate',
     templateUrl: './add-certificate.component.html',
-    styleUrls: ['./add-certificate.component.scss'.toString()]
+    styleUrls: ['./add-certificate.component.scss']
 })
 
 export class AddCertificateComponent {

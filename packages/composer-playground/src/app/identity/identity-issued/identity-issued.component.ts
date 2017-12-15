@@ -10,7 +10,7 @@ import { IdCard } from 'composer-common';
     selector: 'identity-issued-modal',
     templateUrl: './identity-issued.component.html',
     styleUrls: [
-        './identity-issued.component.scss'.toString()
+        './identity-issued.component.scss'
     ]
 })
 export class IdentityIssuedComponent implements OnInit {

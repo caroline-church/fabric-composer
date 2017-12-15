@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'replace-confirm',
     templateUrl: './replace-confirm.component.html',
-    styleUrls: ['./replace-confirm.component.scss'.toString()]
+    styleUrls: ['./replace-confirm.component.scss']
 })
 
 export class ReplaceComponent {

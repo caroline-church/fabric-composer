@@ -10,7 +10,8 @@ import {
     TransactionDeclaration,
     Field
 } from 'composer-common';
-import leftPad = require('left-pad');
+
+import leftPad  from 'left-pad';
 
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/fold/foldcode';
@@ -24,7 +25,7 @@ import 'codemirror/addon/scroll/simplescrollbars';
 @Component({
     selector: 'resource-modal',
     templateUrl: './resource.component.html',
-    styleUrls: ['./resource.component.scss'.toString()]
+    styleUrls: ['./resource.component.scss']
 })
 
 export class ResourceComponent implements OnInit {

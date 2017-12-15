@@ -4,7 +4,7 @@ import { AlertService } from '../../basic-modals/alert.service';
 @Component({
     selector: 'credentials',
     templateUrl: './credentials.component.html',
-    styleUrls: ['./credentials.component.scss'.toString()]
+    styleUrls: ['./credentials.component.scss']
 })
 
 export class CredentialsComponent implements AfterViewInit {

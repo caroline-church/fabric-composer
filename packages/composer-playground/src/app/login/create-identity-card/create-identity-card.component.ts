@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     selector: 'create-identity-card',
     templateUrl: './create-identity-card.component.html',
     styleUrls: [
-        './create-identity-card.component.scss'.toString()
+        './create-identity-card.component.scss'
     ]
 })
 

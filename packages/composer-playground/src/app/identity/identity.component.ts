@@ -16,7 +16,7 @@ import { saveAs } from 'file-saver';
     selector: 'identity',
     templateUrl: './identity.component.html',
     styleUrls: [
-        './identity.component.scss'.toString()
+        './identity.component.scss'
     ]
 })
 export class IdentityComponent implements OnInit {

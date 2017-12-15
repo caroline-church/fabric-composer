@@ -8,7 +8,7 @@ import { Config } from './../services/config/configStructure.service';
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: [
-        './footer.component.scss'.toString()
+        './footer.component.scss'
     ]
 })
 

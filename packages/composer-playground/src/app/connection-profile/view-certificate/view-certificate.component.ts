@@ -5,7 +5,7 @@ import { ConnectionProfileService } from '../../services/connectionprofile.servi
 @Component({
     selector: 'view-certificate',
     templateUrl: './view-certificate.component.html',
-    styleUrls: ['./view-certificate.component.scss'.toString()]
+    styleUrls: ['./view-certificate.component.scss']
 })
 export class ViewCertificateComponent {
     public certificate: string;
