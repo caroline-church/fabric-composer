@@ -159,11 +159,11 @@ module.exports = function (options) {
             regExp : './assets/svg/.*/(.*)\\.svg'
           })
         },
-        {
-          test: /\.scss$/,
+          {
+              test : /\.scss$/,
           exclude: /node_modules/,
           loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
-        }
+                  }
 
       ],
 
@@ -314,4 +314,4 @@ module.exports = function (options) {
     }
 
   };
-}
+};
