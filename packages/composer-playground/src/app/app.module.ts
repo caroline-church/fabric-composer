@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageModule } from 'angular-2-local-storage';
 
+import { APP_BASE_HREF } from '@angular/common';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -78,7 +80,8 @@ type StoreType = {
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
       environment.ENV_PROVIDERS,
-      APP_PROVIDERS
+      APP_PROVIDERS,
+        {provide: APP_BASE_HREF, useValue: '/'}
     ]
 })
 export class AppModule {}

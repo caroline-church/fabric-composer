@@ -125,15 +125,11 @@ module.exports = function (options) {
         'DOCKER' : DOCKER,
         'DOCKER_COMPOSE' : DOCKER_COMPOSE,
         'PLAYGROUND_API' : JSON.stringify(PLAYGROUND_API),
-        'process.env.ENV': JSON.stringify(METADATA.ENV),
-        'process.env.NODE_ENV': JSON.stringify(METADATA.ENV),
-        'process.env.HMR': METADATA.HMR
-      }),
-
-
-      new EvalSourceMapDevToolPlugin({
-        moduleFilenameTemplate: '[resource-path]',
-        sourceRoot: 'webpack:///'
+        /* 'process.env': {
+         'ENV': JSON.stringify(METADATA.ENV),
+         'NODE_ENV': JSON.stringify(METADATA.ENV),
+         'HMR': METADATA.HMR,
+         } */
       }),
 
       /**
@@ -154,7 +150,6 @@ module.exports = function (options) {
         options: { }
       }),
 
-      // TODO: HMR
     ],
 
     /**
@@ -206,4 +201,4 @@ module.exports = function (options) {
     }
 
   });
-}
+};

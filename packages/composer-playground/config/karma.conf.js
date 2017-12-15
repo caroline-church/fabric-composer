@@ -17,7 +17,7 @@ module.exports = function (config) {
      *
      * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
      */
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'chai', 'sinon', 'sinon-chai'],
 
     /**
      * List of files to exclude.
@@ -122,6 +122,15 @@ module.exports = function (config) {
     browsers: [
       'Chrome'
     ],
+
+    browserNoActivityTimeout: 30000,
+
+    client : {
+        captureConsole : true
+    },
+    browserConsoleLogOptions: {
+      level: 'log'
+    },
 
     customLaunchers: {
       ChromeTravisCi: {
