@@ -1,49 +1,65 @@
 /**
  * @author: @AngularClass
  */
-
 const helpers = require('./helpers');
-const webpackMerge = require('webpack-merge'); // used to merge webpack configs
-const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
+const buildUtils = require('./build-utils');
+
+/**
+ * Used to merge webpack configs
+*/
+const webpackMerge = require('webpack-merge');
+/**
+ * The settings that are common to prod and dev
+*/
+const commonConfig = require('./webpack.common.js');
 
 /**
  * Webpack Plugins
  */
-const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-const IgnorePlugin = require('webpack/lib/IgnorePlugin');
-const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
-const V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin');
-/**
- * Webpack Constants
- */
-const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 8080;
-const DOCKER = !!process.env.DOCKER;
-const DOCKER_COMPOSE = !!process.env.DOCKER_COMPOSE;
-const PLAYGROUND_API = process.env.PLAYGROUND_API || '';
-const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
-  host: HOST,
-  port: PORT,
-  ENV: ENV,
-  HMR: false
-});
+const SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin')
+const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+
+
+function getUglifyOptions (supportES2015) {
+  const uglifyCompressOptions = {
+    pure_getters: true, /* buildOptimizer */
+    // PURE comments work best with 3 passes.
+    // See https://github.com/webpack/webpack/issues/2899#issuecomment-317425926.
+    passes: 3         /* buildOptimizer */
+  };
+
+  return {
+    ecma: supportES2015 ? 6 : 5,
+    warnings: false,    // TODO verbose based on option?
+    ie8: false,
+    mangle: true,
+    compress: uglifyCompressOptions,
+    output: {
+      ascii_only: true,
+      comments: false
+    }
+  };
+}
 
 module.exports = function (env) {
-  return webpackMerge(commonConfig({env: ENV}), {
+  const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
+  const supportES2015 = buildUtils.supportES2015(buildUtils.DEFAULT_METADATA.tsConfigPath);
+  const METADATA = Object.assign({}, buildUtils.DEFAULT_METADATA, {
+    host: process.env.HOST || 'localhost',
+    port: process.env.PORT || 8080,
+    ENV: ENV,
+    HMR: false
+  });
 
-    /**
-     * Developer tool to enhance debugging
-     *
-     * See: http://webpack.github.io/docs/configuration.html#devtool
-     * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
-     */
-    devtool: 'source-map',
+  // set environment suffix so these environments are loaded.
+  METADATA.envFileSuffix = METADATA.E2E ? 'e2e.prod' : 'prod';
+
+  return webpackMerge(commonConfig({ env: ENV, metadata: METADATA }), {
 
     /**
      * Options affecting the output of the compilation.
@@ -73,7 +89,7 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
        */
-      sourceMapFilename: '[name].[chunkhash].bundle.map',
+      sourceMapFilename: '[file].map',
 
       /**
        * The filename of non-entry chunks as relative path
@@ -81,7 +97,39 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
        */
-      chunkFilename: '[id].[chunkhash].chunk.js'
+      chunkFilename: '[name].[chunkhash].chunk.js'
+
+    },
+
+    module: {
+
+      rules: [
+
+        /**
+         * Extract CSS files from .src/styles directory to external CSS file
+         */
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader'
+          }),
+          include: [helpers.root('src', 'styles')]
+        },
+
+        /**
+         * Extract and compile SCSS files from .src/styles directory to external CSS file
+         */
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader!sass-loader'
+          }),
+          include: [helpers.root('src', 'styles')]
+        },
+
+      ]
 
     },
 
@@ -92,46 +140,26 @@ module.exports = function (env) {
      */
     plugins: [
 
-      /**
-       * Plugin: WebpackMd5Hash
-       * Description: Plugin to replace a standard webpack chunkhash with md5.
-       *
-       * See: https://www.npmjs.com/package/webpack-md5-hash
-       */
-      new WebpackMd5Hash(),
-
-      /**
-       * Plugin: DedupePlugin
-       * Description: Prevents the inclusion of duplicate code into your bundle
-       * and instead applies a copy of the function at runtime.
-       *
-       * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-       * See: https://github.com/webpack/docs/wiki/optimization#deduplication
-       */
-      // new DedupePlugin(), // see: https://github.com/angular/angular-cli/issues/1587
-
-      /**
-       * Plugin: DefinePlugin
-       * Description: Define free variables.
-       * Useful for having development builds with debug logging or adding global constants.
-       *
-       * Environment helpers
-       *
-       * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-       */
-      // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
-      new DefinePlugin({
-        'ENV': JSON.stringify(METADATA.ENV),
-        'HMR': METADATA.HMR,
-        'DOCKER': DOCKER,
-        'DOCKER_COMPOSE': DOCKER_COMPOSE,
-        'PLAYGROUND_API' : JSON.stringify(PLAYGROUND_API)
-        /* 'process.env': {
-          'ENV': JSON.stringify(METADATA.ENV),
-          'NODE_ENV': JSON.stringify(METADATA.ENV),
-          'HMR': METADATA.HMR,
-        } */
+      new SourceMapDevToolPlugin({
+        filename: '[file].map[query]',
+        moduleFilenameTemplate: '[resource-path]',
+        fallbackModuleFilenameTemplate: '[resource-path]?[hash]',
+        sourceRoot: 'webpack:///'
       }),
+
+
+      /**
+       * Plugin: ExtractTextPlugin
+       * Description: Extracts imported CSS files into external stylesheet
+       *
+       * See: https://github.com/webpack/extract-text-webpack-plugin
+       */
+      new ExtractTextPlugin('[name].[contenthash].css'),
+
+      new PurifyPlugin(), /* buildOptimizer */
+
+      new HashedModuleIdsPlugin(),
+      new ModuleConcatenationPlugin(),
 
       /**
        * Plugin: UglifyJsPlugin
@@ -139,138 +167,30 @@ module.exports = function (env) {
        * Loaders are switched into minimizing mode.
        *
        * See: https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+       *
+       * NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
        */
-      // NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
       new UglifyJsPlugin({
-        // beautify: true, //debug
-        // mangle: false, //debug
-        // dead_code: false, //debug
-        // unused: false, //debug
-        // deadCode: false, //debug
-        // compress: {
-        //   screw_ie8: true,
-        //   keep_fnames: true,
-        //   drop_debugger: false,
-        //   dead_code: false,
-        //   unused: false
-        // }, // debug
-        // comments: true, //debug
+        sourceMap: true,
+        uglifyOptions: getUglifyOptions(supportES2015)
+      })
 
+    ],
 
-        beautify: false, //prod
-        output: {
-          comments: false
-        }, //prod
-        mangle: {
-          screw_ie8: true
-        }, //prod
-        compress: {
-          screw_ie8: true,
-          warnings: false,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true,
-          negate_iife: false // we need this for lazy v8
-        },
-      }),
+    /**
+     * Include polyfills or mocks for various node stuff
+     * Description: Node configuration
+     *
+     * See: https://webpack.github.io/docs/configuration.html#node
+     */
+    node: {
+      global: true,
+      crypto: 'empty',
+      process: false,
+      module: false,
+      clearImmediate: false,
+      setImmediate: false
+    }
 
-      /**
-       * Plugin: NormalModuleReplacementPlugin
-       * Description: Replace resources that matches resourceRegExp with newResource
-       *
-       * See: http://webpack.github.io/docs/list-of-plugins.html#normalmodulereplacementplugin
-       */
-
-      new NormalModuleReplacementPlugin(
-        /angular2-hmr/,
-        helpers.root('config/empty.js')
-      ),
-
-      new NormalModuleReplacementPlugin(
-        /zone\.js(\\|\/)dist(\\|\/)long-stack-trace-zone/,
-        helpers.root('config/empty.js')
-      ),
-
-
-      // AoT
-      // new NormalModuleReplacementPlugin(
-      //   /@angular(\\|\/)upgrade/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /@angular(\\|\/)compiler/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /@angular(\\|\/)platform-browser-dynamic/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /dom(\\|\/)debug(\\|\/)ng_probe/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /dom(\\|\/)debug(\\|\/)by/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /src(\\|\/)debug(\\|\/)debug_node/,
-      //   helpers.root('config/empty.js')
-      // ),
-      // new NormalModuleReplacementPlugin(
-      //   /src(\\|\/)debug(\\|\/)debug_renderer/,
-      //   helpers.root('config/empty.js')
-      // ),
-
-      /**
-       * Plugin: CompressionPlugin
-       * Description: Prepares compressed versions of assets to serve
-       * them with Content-Encoding
-       *
-       * See: https://github.com/webpack/compression-webpack-plugin
-       */
-      //  install compression-webpack-plugin
-      // new CompressionPlugin({
-      //   regExp: /\.css$|\.html$|\.js$|\.map$/,
-      //   threshold: 2 * 1024
-      // })
-
-      /**
-       * Plugin LoaderOptionsPlugin (experimental)
-       *
-       * See: https://gist.github.com/sokra/27b24881210b56bbaff7
-       */
-      new LoaderOptionsPlugin({
-        minimize: true,
-        debug: false,
-        options: {
-
-          /**
-           * Html loader advanced options
-           *
-           * See: https://github.com/webpack/html-loader#advanced-options
-           */
-          // TODO: Need to workaround Angular 2's html syntax => #id [bind] (event) *ngFor
-          htmlLoader: {
-            minimize: true,
-            removeAttributeQuotes: false,
-            caseSensitive: true,
-            customAttrSurround: [
-              [/#/, /(?:)/],
-              [/\*/, /(?:)/],
-              [/\[?\(?/, /(?:)/]
-            ],
-            customAttrAssign: [/\)?\]?=/]
-          },
-
-        }
-      }),
-
-    ]
   });
-};
+}
