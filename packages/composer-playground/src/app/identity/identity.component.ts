@@ -15,8 +15,8 @@ import { saveAs } from 'file-saver';
 @Component({
     selector: 'identity',
     templateUrl: './identity.component.html',
-    styleUrls: [
-        './identity.component.scss'
+    styles: [
+        require('./identity.component.scss').toString()
     ]
 })
 export class IdentityComponent implements OnInit {

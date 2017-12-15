@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
     selector: 'file-importer',
     templateUrl: './file-importer.component.html',
-    styleUrls: ['./file-importer.component.scss']
+    styles: [require('./file-importer.component.scss').toString()]
 })
 
 export class FileImporterComponent {

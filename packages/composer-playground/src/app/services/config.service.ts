@@ -15,14 +15,15 @@ export class ConfigService {
 
     loadConfig(): Promise<Config> {
         // Load the config data.
-        return this.http.get('/config.json')
-            .map((res: Response) => res.json())
-            .toPromise()
+      //  return this.http.get('/config.json')
+      //      .map((res: Response) => res.json())
+      //      .toPromise()
+        return Promise.resolve()
             .then((config) => {
                 this.configLoaded = true;
                 let newConfig = new Config();
                 newConfig.setToDefault();
-                newConfig.setValuesFromObject(config);
+              //  newConfig.setValuesFromObject(config);
                 this.config = newConfig;
                 return newConfig;
             });

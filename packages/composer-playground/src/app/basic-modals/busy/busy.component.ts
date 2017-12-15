@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'busy',
     templateUrl: './busy.component.html',
-    styleUrls: ['./busy.component.scss']
+    styles: [require('./busy.component.scss').toString()]
 })
 export class BusyComponent {
     @Input() busy;

@@ -108,9 +108,9 @@ function ngcWebpackSetup(prod, metadata) {
       test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
       use: metadata.AOT && buildOptimizer ? [ buildOptimizerLoader, '@ngtools/webpack' ] : [ '@ngtools/webpack' ]
     },
-    // ...buildOptimizer
-    //   ? [ { test: /\.js$/, use: [ buildOptimizerLoader ] } ]
-    //   : []
+    ...buildOptimizer
+      ? [ { test: /\.js$/, use: [ buildOptimizerLoader ] } ]
+      : []
   ];
 
   return {

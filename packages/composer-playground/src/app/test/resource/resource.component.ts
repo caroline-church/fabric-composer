@@ -25,7 +25,7 @@ import 'codemirror/addon/scroll/simplescrollbars';
 @Component({
     selector: 'resource-modal',
     templateUrl: './resource.component.html',
-    styleUrls: ['./resource.component.scss']
+    styles: [require('./resource.component.scss').toString()]
 })
 
 export class ResourceComponent implements OnInit {

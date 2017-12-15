@@ -5,7 +5,7 @@ import { AlertService } from '../alert.service';
 @Component({
     selector: 'success',
     templateUrl: './success.component.html',
-    styleUrls: ['./success.component.scss'],
+    styles: [require('./success.component.scss').toString()],
     animations: [
         trigger('fadeInOut', [
             transition(':enter', [

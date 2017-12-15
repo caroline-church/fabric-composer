@@ -17,18 +17,18 @@ export class AboutService {
                             name: 'playground',
                             version: modules.version
                         },
-                        common: {
-                            name: 'composer-common',
-                            version: modules.dependencies['composer-common'].version
-                        },
-                        client: {
-                            name: 'composer-client',
-                            version: modules.dependencies['composer-client'].version,
-                        },
-                        admin: {
-                            name: 'composer-admin',
-                            version: modules.dependencies['composer-admin'].version
-                        }
+                        // common: {
+                        //     name: 'composer-common',
+                        //     version: modules.dependencies['composer-common'].version
+                        // },
+                        // client: {
+                        //     name: 'composer-client',
+                        //     version: modules.dependencies['composer-client'].version,
+                        // },
+                        // admin: {
+                        //     name: 'composer-admin',
+                        //     version: modules.dependencies['composer-admin'].version
+                        // }
                     };
                     return this.versions;
                 });

@@ -27,7 +27,7 @@ import { DrawerDismissReasons } from './drawer-dismiss-reasons';
 @Component({
   selector: 'drawer',
   templateUrl: './drawer.component.html',
-  styleUrls: ['./drawer.component.scss'],
+  styles: [require('./drawer.component.scss').toString()],
   animations: [
     trigger('slideOpenClosed', [
       state('open', style({

@@ -3,8 +3,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'create-identity-card',
     templateUrl: './create-identity-card.component.html',
-    styleUrls: [
-        './create-identity-card.component.scss'
+    styles: [
+        require('./create-identity-card.component.scss').toString()
     ]
 })
 
@@ -45,18 +45,18 @@ export class CreateIdentityCardComponent {
                 description: 'A description for a V1 Profile',
                 type: 'hlfv1',
                 orderers: [{
-                            url: 'grpc://localhost:7050',
-                            cert: ''
-                            }],
+                    url: 'grpc://localhost:7050',
+                    cert: ''
+                }],
                 ca: {
-                        url: 'http://localhost:7054',
-                        name: ''
-                    },
+                    url: 'http://localhost:7054',
+                    name: ''
+                },
                 peers: [{
-                            requestURL: 'grpc://localhost:7051',
-                            eventURL: 'grpc://localhost:7053',
-                            cert: ''
-                        }],
+                    requestURL: 'grpc://localhost:7051',
+                    eventURL: 'grpc://localhost:7053',
+                    cert: ''
+                }],
                 keyValStore: '/tmp/keyValStore',
                 channel: 'composerchannel',
                 mspID: 'Org1MSP',

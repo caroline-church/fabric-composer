@@ -8,8 +8,8 @@ import { TransactionDeclaration } from 'composer-common';
 @Component({
     selector: 'app-test',
     templateUrl: './test.component.html',
-    styleUrls: [
-        './test.component.scss'
+    styles: [
+        require('./test.component.scss').toString()
     ]
 })
 

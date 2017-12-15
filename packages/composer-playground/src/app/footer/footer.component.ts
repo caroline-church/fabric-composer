@@ -7,8 +7,8 @@ import { Config } from './../services/config/configStructure.service';
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: [
-        './footer.component.scss'
+    styles: [
+        require('./footer.component.scss').toString()
     ]
 })
 

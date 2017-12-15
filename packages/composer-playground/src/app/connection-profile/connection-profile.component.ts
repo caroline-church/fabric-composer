@@ -16,8 +16,8 @@ import { AlertService } from '../basic-modals/alert.service';
 @Component({
     selector: 'connection-profile',
     templateUrl: './connection-profile.component.html',
-    styleUrls: [
-        './connection-profile.component.scss'
+    styles: [
+        require('./connection-profile.component.scss').toString()
     ],
 
 })

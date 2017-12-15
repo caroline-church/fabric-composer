@@ -5,9 +5,8 @@ import { IdCard } from 'composer-common';
 @Component({
     selector: 'identity-card',
     templateUrl: './identity-card.component.html',
-    styleUrls: [
-        './identity-card.component.scss'
-    ]
+    styles: [
+        require('./identity-card.component.scss').toString()]
 })
 
 export class IdentityCardComponent {

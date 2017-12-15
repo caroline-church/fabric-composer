@@ -10,8 +10,8 @@ import { ViewTransactionComponent } from '../view-transaction/view-transaction.c
 @Component({
     selector: 'registry',
     templateUrl: './registry.component.html',
-    styleUrls: [
-        './registry.component.scss'
+    styles: [
+        require('./registry.component.scss').toString()
     ]
 })
 

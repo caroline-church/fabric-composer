@@ -7,7 +7,7 @@ import { FileService } from '../../services/file.service';
 @Component({
     selector: 'add-file-modal',
     templateUrl: './add-file.component.html',
-    styleUrls: ['./add-file.component.scss']
+    styles: [require('./add-file.component.scss').toString()]
 })
 export class AddFileComponent {
 

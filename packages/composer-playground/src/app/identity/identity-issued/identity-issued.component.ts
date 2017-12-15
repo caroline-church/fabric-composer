@@ -9,8 +9,8 @@ import { IdCard } from 'composer-common';
 @Component({
     selector: 'identity-issued-modal',
     templateUrl: './identity-issued.component.html',
-    styleUrls: [
-        './identity-issued.component.scss'
+    styles: [
+        require('./identity-issued.component.scss').toString()
     ]
 })
 export class IdentityIssuedComponent implements OnInit {

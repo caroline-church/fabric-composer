@@ -29,8 +29,8 @@ import { saveAs } from 'file-saver';
 @Component({
     selector: 'app-editor',
     templateUrl: './editor.component.html',
-    styleUrls: [
-        './editor.component.scss'
+    styles: [
+        require('./editor.component.scss').toString()
     ]
 })
 

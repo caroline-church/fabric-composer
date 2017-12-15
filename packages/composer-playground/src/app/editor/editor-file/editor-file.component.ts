@@ -18,8 +18,8 @@ import 'codemirror/addon/scroll/simplescrollbars';
 @Component({
     selector: 'editor-file',
     templateUrl: './editor-file.component.html',
-    styleUrls: [
-        './editor-file.component.scss'
+    styles: [
+        require('./editor-file.component.scss').toString()
     ]
 })
 export class EditorFileComponent {

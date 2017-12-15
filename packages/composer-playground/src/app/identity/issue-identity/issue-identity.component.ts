@@ -15,7 +15,7 @@ import { ClientService } from '../../services/client.service';
 @Component({
     selector: 'issue-identity-modal',
     templateUrl: './issue-identity.component.html',
-    styleUrls: ['./issue-identity.component.scss']
+    styles: [require('./issue-identity.component.scss').toString()]
 })
 export class IssueIdentityComponent implements OnInit {
 

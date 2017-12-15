@@ -7,7 +7,7 @@ import { IdCard } from 'composer-common';
 @Component({
     selector: 'version-check-modal',
     templateUrl: './version-check.component.html',
-    styleUrls: ['./version-check.component.scss']
+    styles: [require('./version-check.component.scss').toString()]
 })
 export class VersionCheckComponent {
 

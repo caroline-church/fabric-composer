@@ -5,7 +5,7 @@ import { EditorFile } from '../../services/editor-file';
 @Component({
     selector: 'delete-confirm',
     templateUrl: './delete-confirm.component.html',
-    styleUrls: ['./delete-confirm.component.scss']
+    styles: [require('./delete-confirm.component.scss').toString()]
 })
 
 export class DeleteComponent implements OnInit {
